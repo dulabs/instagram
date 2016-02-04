@@ -13,7 +13,8 @@ See callback.php to get access token.
 
 # Login
 
-`<?php
+```php 
+
 require_once(__DIR__.'/../vendor/autoload.php');
 
 use Dulabs\Instagram\OAuthManager as OAuth;
@@ -31,11 +32,12 @@ $oauth->setConfig($config);
 // define scopes
 $loginurl = $oauth->login(['basic','public_content','follower_list']);
 
-header("location: ".$loginurl);`
+header("location: ".$loginurl);
+```
 
 # Callback
 
-`
+```php
 require_once(__DIR__.'/../vendor/autoload.php');
 
 use Dulabs\Instagram\OAuthManager as OAuth;
@@ -55,4 +57,4 @@ if(isset($_GET['code']) && !empty($_GET['code']))
 	setcookie("instagram_token",$token,time()+3600);
 	header("location: demo.php");
 }
-`
+```
