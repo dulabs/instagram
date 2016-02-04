@@ -1,7 +1,7 @@
 <?php
-namespace Instagram\API;
+namespace Dulabs\Instagram\API;
 
-use Instagram\Instagram;
+use Dulabs\Instagram\Instagram;
 
 /**
  * Media Endpoints
@@ -11,9 +11,9 @@ use Instagram\Instagram;
 class Media
 {
 
-	public static function getInstance()
+	public function getInstance()
 	{
-		static $instance;
+		$instance;
 		$instance = ($instance === null) ? new self() : $instance;
 		return $instance;
 	}
@@ -28,7 +28,7 @@ class Media
 	public function get($media)
 	{
 		$endpoint = "media/{$media}";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -43,7 +43,7 @@ class Media
 	public function shortcode($shortcode)
 	{
 		$endpoint = "media/shortcode/{$shortcode}";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	} 
 
 	/**
@@ -56,7 +56,7 @@ class Media
 	public function search($params)
 	{
 		$endpoint = "media/search";
-		return Instagram::_call($endpoint,$params);
+		return $this->_call($endpoint,$params);
 	}
 
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Instagram;
+namespace Dulabs\Instagram;
 
 class APIManager
 {
@@ -16,7 +16,6 @@ class APIManager
      */
     static $_accesstoken;
 
-    static $accesstoken;
     /**
      * Whether a signed header should be used.
      *
@@ -62,7 +61,7 @@ class APIManager
 
             // if the call needs an authenticated user
         if (!isset(static::$_accesstoken)) {
-            throw new InstagramException("Error: _call() | $function - This method requires an authenticated users access token.");
+            throw new \Exception("Error: _call() | \$function - This method requires an authenticated users access token.");
         }
 
         $authMethod = '?access_token=' . static::getAccessToken();
@@ -115,7 +114,7 @@ class APIManager
         static::$_xRateLimitRemaining = $headers['X-Ratelimit-Remaining'];
 
         if (!$jsonData) {
-            throw new InstagramException('Error: _call() - cURL error: ' . curl_error($ch));
+            throw new \Exception('Error: _call() - cURL error: ' . curl_error($ch));
         }
 
         curl_close($ch);
@@ -221,11 +220,4 @@ class APIManager
         return static::$_apisecret;
     }
 
-        // we've writen this code where we need
-    public static function load($classname) {
-        $filename = __DIR__.str_replace("Instagram\API\\","/API/",$classname) .".php";
-        if(file_exists($filename)){
-            include_once($filename);
-        }
-    }
 }

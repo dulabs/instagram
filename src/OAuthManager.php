@@ -1,5 +1,5 @@
 <?php
-namespace Instagram;
+namespace Dulabs\Instagram;
 
 class OAuthManager
 {
@@ -17,7 +17,7 @@ class OAuthManager
      * The OAuth Params
      * @var array
      */
-   	 static $params;
+   	 private $params;
 
    	 const RESPONSE_TYPE_CODE = 'code';
 
@@ -29,82 +29,82 @@ class OAuthManager
      *
      * @var bool
      */
-    private static $_signedheader = false;
+    private $_signedheader = false;
 
     /**
      * Available scopes.
      *
      * @var string[]
      */
-    private static $_scopes = array('basic','public_content','follower_list','likes','comments','relationships');
+    private $_scopes = array('basic','public_content','follower_list','likes','comments','relationships');
 
 
 
-	public static function setConfig($config)
+	public function setConfig($config)
 	{
-		self::set_api_key($config['api_key']);
-		self::set_api_secret($config['api_secret']);
-		self::set_callback_url($config['callback_url']);
-		self::set_response_type($config['response_type']);
+		$this->set_api_key($config['api_key']);
+		$this->set_api_secret($config['api_secret']);
+		$this->set_callback_url($config['callback_url']);
+		$this->set_response_type($config['response_type']);
 
-		return new static;
+		return $this;
 	}
 
-	public static function set_api_key($api_key)
+	public function set_api_key($api_key)
 	{
-		static::$params['client_id'] = $api_key;
+		$this->params['client_id'] = $api_key;
 
-		return new static;
+		return $this;
 	}
 
-	public static function set_api_secret($api_secret)
+	public function set_api_secret($api_secret)
 	{
-		static::$params['client_secret'] = $api_secret;
+		$this->params['client_secret'] = $api_secret;
 
-		return new static;
+		return $this;
 	}
 
-	public static function set_callback_url($url)
+	public function set_callback_url($url)
 	{
-		static::$params['redirect_uri'] = $url;
+		$this->params['redirect_uri'] = $url;
 
-		return new static;
+		return $this;
 	}
 
-	public static function set_response_type($type)
+	public function set_response_type($type)
 	{
-		static::$params['response_type'] = $type;
+		$this->params['response_type'] = $type;
 
-		return new static;
+		return $this;
 	}
 
-	public static function set_code($code)
+	public function set_code($code)
 	{
-		static::$params['code'] = $code;
+		$this->params['code'] = $code;
 
-		return new static;
+		return $this;
 	}
 
-	public static function login($scopes = array('basic'))
+	public function login($scopes = array('basic'))
 	{
-		$str_query = http_build_query(self::$params);
-	    if (is_array($scopes) && count(array_intersect($scopes, self::$_scopes)) === count($scopes)) {
+		$str_query = http_build_query($this->params);
+	    if (is_array($scopes) && count(array_intersect($scopes, $this->_scopes)) === count($scopes)) {
             return self::API_OAUTH_URL .'?'.$str_query.'&scope=' . implode('+',$scopes);
         }
 	}
 
-	public static function getAccessToken()
+	public function getAccessToken()
 	{
-		$response_type = static::$params['response_type'];
-		if($response_type == static::RESPONSE_TYPE_TOKEN)
+		$response_type = $this->params['response_type'];
+		if($response_type == self::RESPONSE_TYPE_TOKEN)
 		{
 			return $_GET['access_token'];
 		}else{
 
 			$code = $_GET['code'];
-			static::$params['grant_type'] = 'authorization_code';
-			static::$params['code'] = $code;
-			$response = static::call(static::API_OAUTH_TOKEN_URL);
+			$this->params['grant_type'] = 'authorization_code';
+			$this->params['code'] = $code;
+			$response = $this->call(self::API_OAUTH_TOKEN_URL);
 			
 			if(empty($response)) return false;
 
@@ -123,9 +123,9 @@ class OAuthManager
 		}
 	}
 
-	public static function call($url)
+	public function call($url)
 	{
-		$params = static::$params;
+		$params = $this->params;
 		$paramString = http_build_query($params);
 		$ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

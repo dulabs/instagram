@@ -1,7 +1,7 @@
 <?php
-namespace Instagram\API;
+namespace Dulabs\Instagram\API;
 
-use Instagram\Instagram;
+use Dulabs\Instagram\Instagram;
 
 /**
  * Location Endpoints
@@ -11,7 +11,7 @@ use Instagram\Instagram;
 class Location
 {
 
-	public static function getInstance()
+	public function getInstance()
 	{
 		static $instance;
 		$instance = ($instance === null) ? new self() : $instance;
@@ -28,7 +28,7 @@ class Location
 	public function get($location_id)
 	{
 		$endpoint = "locations/{$location_id}";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Location
 	public function media($location_id,$params=null)
 	{
 		$endpoint = "locations/{$location_id}/media/recent";
-		return Instagram::_call($endpoint,$params);
+		return $this->_call($endpoint,$params);
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Location
 	public function search($params)
 	{
 		$endpoint = "locations/search";
-		return Instagram::_call($endpoint,$params);
+		return $this->_call($endpoint,$params);
 	}
 
 }

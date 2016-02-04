@@ -1,0 +1,44 @@
+{
+    "name": "dulabs/instagram",
+    "description": "Instagram OAuth 2.0 Client",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Abdul Ibad",
+            "email": "dev@dulabs.com",
+            "homepage": "https://github.com/dulabs"
+        }
+    ],
+    "keywords": [
+        "oauth",
+        "oauth2",
+        "client",
+        "authorization",
+        "authorisation",
+        "instagram"
+    ],
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.1",
+        "mockery/mockery": "~0.9",
+        "squizlabs/php_codesniffer": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dulabs\\Instagram\\": "src/",
+            "Dulabs\\Instagram\\API\\": "src/API"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dulabs\\Instagram\\Test\\": "test/src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

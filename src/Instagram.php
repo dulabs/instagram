@@ -1,41 +1,41 @@
 <?php
-namespace Instagram;
+namespace Dulabs\Instagram;
 
 
 class Instagram extends APIManager
 {
 
-	public static function User()
+	public function User()
 	{
 		return API\User::getInstance();
 	}
 
-	public static function Relationship()
+	public function Relationship()
 	{
 		return API\Relationship::getInstance();
 	}
 
-	public static function Media()
+	public function Media()
 	{
 		return API\Media::getInstance();
 	}
 
-	public static function Comment()
+	public function Comment()
 	{
 		return API\Comment::getInstance();
 	}
 
-	public static function Like()
+	public function Like()
 	{
 		return API\Like::getInstance();
 	}
 
-	public static function Tag()
+	public function Tag()
 	{
 		return API\Tag::getInstance();
 	}
 
-	public static function Location()
+	public function Location()
 	{
 		return API\Location::getInstance();
 	}

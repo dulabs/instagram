@@ -1,7 +1,7 @@
 <?php
-namespace Instagram\API;
+namespace Dulabs\Instagram\API;
 
-use Instagram\Instagram;
+use Dulabs\Instagram\Instagram;
 
 /**
  * Tag Endpoints
@@ -11,7 +11,7 @@ use Instagram\Instagram;
 class Tag
 {
 
-	public static function getInstance()
+	public function getInstance()
 	{
 		static $instance;
 		$instance = ($instance === null) ? new self() : $instance;
@@ -28,7 +28,7 @@ class Tag
 	public function get($name)
 	{
 		$endpoint = "tags/{$name}";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Tag
 	public function media($name,$params=null)
 	{
 		$endpoint = "tags/{$name}/media/recent";
-		return Instagram::_call($endpoint,$params);
+		return $this->_call($endpoint,$params);
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Tag
 	public function search($params)
 	{
 		$endpoint = "tags/search";
-		return Instagram::_call($endpoint,$params);
+		return $this->_call($endpoint,$params);
 	}
 
 }

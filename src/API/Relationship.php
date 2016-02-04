@@ -1,7 +1,7 @@
 <?php
-namespace Instagram\API;
+namespace Dulabs\Instagram\API;
 
-use Instagram\Instagram;
+use Dulabs\Instagram\Instagram;
 
 /**
  * Relationship Endpoints
@@ -11,7 +11,7 @@ use Instagram\Instagram;
 class Relationship
 {
 
-	public static function getInstance()
+	public function getInstance()
 	{
 		static $instance;
 		$instance = ($instance === null) ? new self() : $instance;
@@ -27,7 +27,7 @@ class Relationship
 	public function follows()
 	{
 		$endpoint = "users/self/follows";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}	
 
 	/**
@@ -39,7 +39,7 @@ class Relationship
 	public function followedby()
 	{
 		$endpoint = "users/self/followed-by";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -52,7 +52,7 @@ class Relationship
 	public function requestedby()
 	{
 		$endpoint = "users/self/requested-by";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -65,7 +65,7 @@ class Relationship
 	public function get($uid)
 	{
 		$endpoint = "users/{$uid}/relationship";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -80,7 +80,7 @@ class Relationship
 	public function post($uid,$params)
 	{
 		$endpoint = "users/{$uid}/relationship";
-		return Instagram::_call($endpoint,$params);
+		return $this->_call($endpoint,$params);
 	}
 
 	

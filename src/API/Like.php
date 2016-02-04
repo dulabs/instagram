@@ -1,7 +1,7 @@
 <?php
-namespace Instagram\API;
+namespace Dulabs\Instagram\API;
 
-use Instagram\Instagram;
+use Dulabs\Instagram\Instagram;
 
 /**
  * Like Endpoints
@@ -11,7 +11,7 @@ use Instagram\Instagram;
 class Like
 {
 
-	public static function getInstance()
+	public function getInstance()
 	{
 		static $instance;
 		$instance = ($instance === null) ? new self() : $instance;
@@ -28,7 +28,7 @@ class Like
 	public function users($media)
 	{
 		$endpoint = "media/{$media}/likes";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Like
 	public function post($media)
 	{
 		$endpoint = "media/{$media}/likes";
-		return Instagram::_call($endpoint,null,"POST");
+		return $this->_call($endpoint,null,"POST");
 	} 
 
 	/**
@@ -54,7 +54,7 @@ class Like
 	public function remove($media)
 	{
 		$endpoint = "media/{$media}/likes";
-		return Instagram::_call($endpoint,null,"DELETE");
+		return $this->_call($endpoint,null,"DELETE");
 	}
 
 }

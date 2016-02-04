@@ -1,17 +1,17 @@
 <?php
-namespace Instagram\API;
+namespace Dulabs\Instagram\API;
 
-use Instagram\Instagram;
+use Dulabs\Instagram\Instagram;
 
 /**
  * User Endpoints
  * https://www.instagram.com/developer/endpoints/users
  */
 
-class User
+class User extends Instagram
 {
 
-	public static function getInstance()
+	public function getInstance()
 	{
 		static $instance;
 		$instance = ($instance === null) ? new self() : $instance;
@@ -27,7 +27,7 @@ class User
 	public function self()
 	{
 		$endpoint = "users/self/";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}	
 
 	/**
@@ -41,7 +41,7 @@ class User
 	public function self_media($params=null)
 	{
 		$endpoint = "users/self/media/recent/";
-		return Instagram::_call($endpoint,$params);
+		return $this->_call($endpoint,$params);
 	}
 
 	/**
@@ -55,7 +55,7 @@ class User
 	public function self_liked($params=null)
 	{
 		$endpoint = "users/self/media/liked/";
-		return Instagram::_call($endpoint,$params);
+		return $this->_call($endpoint,$params);
 	}
 
 	/**
@@ -68,7 +68,7 @@ class User
 	public function user($uid)
 	{
 		$endpoint = "users/{$uid}/";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -82,7 +82,7 @@ class User
 	public function user_media($uid,$params)
 	{
 		$endpoint = "users/{$uid}/media/recent/";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -95,7 +95,7 @@ class User
 	public function search($params)
 	{
 		$endpoint = "users/search";
-		return Instagram::_call($endpoint,$params);
+		return $this->_call($endpoint,$params);
 	}
 
 

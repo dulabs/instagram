@@ -1,17 +1,17 @@
 <?php
-namespace Instagram\API;
+namespace Dulabs\Instagram\API;
 
-use Instagram\Instagram;
+use Dulabs\Instagram\Instagram;
 
 /**
  * Comment Endpoints
  * https://www.instagram.com/developer/endpoints/comments
  */
 
-class Comment
+class Comment extends Instagram
 {
 
-	public static function getInstance()
+	public function getInstance()
 	{
 		static $instance;
 		$instance = ($instance === null) ? new self() : $instance;
@@ -28,7 +28,7 @@ class Comment
 	public function comments($media)
 	{
 		$endpoint = "media/{$media}/comments";
-		return Instagram::_call($endpoint);
+		return $this->_call($endpoint);
 	}
 
 	/**
@@ -42,7 +42,7 @@ class Comment
 	public function post($media,$params)
 	{
 		$endpoint = "media/{$media}/comments";
-		return Instagram::_call($endpoint,$params,"POST");
+		return $this->_call($endpoint,$params,"POST");
 	} 
 
 	/**
@@ -56,7 +56,7 @@ class Comment
 	public function remove($media,$comment_id)
 	{
 		$endpoint = "media/{$media}/comments/{$comment_id}";
-		return Instagram::_call($endpoint,null,"DELETE");
+		return $this->_call($endpoint,null,"DELETE");
 	}
 
 }
