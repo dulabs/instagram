@@ -1,9 +1,9 @@
 <?php
+
 namespace Dulabs\Instagram;
 
 class APIManager
 {
-
     /**
      * The API base URL.
      */
@@ -14,74 +14,73 @@ class APIManager
      *
      * @var string
      */
-    static $_accesstoken;
+    public static $_accesstoken;
 
     /**
      * Whether a signed header should be used.
      *
      * @var bool
      */
-    static $_signedheader = false;
+    public static $_signedheader = false;
 
     /**
      * Available actions.
      *
      * @var string[]
      */
-    private $_actions = array('follow', 'unfollow', 'block', 'unblock', 'approve', 'deny');
+    private $_actions = ['follow', 'unfollow', 'block', 'unblock', 'approve', 'deny'];
 
     /**
      * Rate limit.
      *
      * @var int
      */
-    static $_xRateLimitRemaining;
+    public static $_xRateLimitRemaining;
 
     /**
-     * The Instagram API Secret
+     * The Instagram API Secret.
      *
      * @var string
      */
-    static $_apisecret;
+    public static $_apisecret;
 
     /**
      * The call operator.
      *
      * @param string $function API resource path
-     * @param bool $auth Whether the function requires an access token
-     * @param array $params Additional request parameters
-     * @param string $method Request type GET|POST
-     *
-     * @return mixed
+     * @param bool   $auth     Whether the function requires an access token
+     * @param array  $params   Additional request parameters
+     * @param string $method   Request type GET|POST
      *
      * @throws \MetzWeb\Instagram\InstagramException
+     *
+     * @return mixed
      */
     public static function _call($endpoint, $params = null, $method = 'GET')
     {
 
             // if the call needs an authenticated user
         if (!isset(static::$_accesstoken)) {
-            throw new \Exception("Error: _call() | \$function - This method requires an authenticated users access token.");
+            throw new \Exception('Error: _call() | $function - This method requires an authenticated users access token.');
         }
 
-        $authMethod = '?access_token=' . static::getAccessToken();
-
+        $authMethod = '?access_token='.static::getAccessToken();
 
         $paramString = null;
 
         if (isset($params) && is_array($params)) {
-            $paramString = '&' . http_build_query($params);
+            $paramString = '&'.http_build_query($params);
         }
 
-        $apiCall = static::API_URL . $endpoint . $authMethod . (('GET' === $method) ? $paramString : null);
+        $apiCall = static::API_URL.$endpoint.$authMethod.(('GET' === $method) ? $paramString : null);
 
         // we want JSON
-        $headerData = array('Accept: application/json');
+        $headerData = ['Accept: application/json'];
 
         if (static::$_signedheader) {
-            $apiCall .= (strstr($apiCall, '?') ? '&' : '?') . 'sig=' . static::_signHeader($function, $authMethod, $params);
+            $apiCall .= (strstr($apiCall, '?') ? '&' : '?').'sig='.static::_signHeader($function, $authMethod, $params);
         }
-        
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $apiCall);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headerData);
@@ -102,7 +101,7 @@ class APIManager
         }
 
         $jsonData = curl_exec($ch);
-    
+
         // split header from JSON data
         // and assign each to a variable
         list($headerContent, $jsonData) = explode("\r\n\r\n", $jsonData, 2);
@@ -114,7 +113,7 @@ class APIManager
         static::$_xRateLimitRemaining = $headers['X-Ratelimit-Remaining'];
 
         if (!$jsonData) {
-            throw new \Exception('Error: _call() - cURL error: ' . curl_error($ch));
+            throw new \Exception('Error: _call() - cURL error: '.curl_error($ch));
         }
 
         curl_close($ch);
@@ -122,7 +121,7 @@ class APIManager
         return json_decode($jsonData);
     }
 
-        /**
+    /**
      * Sign header by using endpoint, parameters and the API secret.
      *
      * @param string
@@ -134,16 +133,16 @@ class APIManager
     private static function _signHeader($endpoint, $authMethod, $params)
     {
         if (!is_array($params)) {
-            $params = array();
+            $params = [];
         }
         if ($authMethod) {
             list($key, $value) = explode('=', substr($authMethod, 1), 2);
             $params[$key] = $value;
         }
-        $baseString = '/' . $endpoint;
+        $baseString = '/'.$endpoint;
         ksort($params);
         foreach ($params as $key => $value) {
-            $baseString .= '|' . $key . '=' . $value;
+            $baseString .= '|'.$key.'='.$value;
         }
         $signature = hash_hmac('sha256', $baseString, static::$_apisecret, false);
 
@@ -159,7 +158,7 @@ class APIManager
      */
     private static function processHeaders($headerContent)
     {
-        $headers = array();
+        $headers = [];
 
         foreach (explode("\r\n", $headerContent) as $i => $line) {
             if ($i === 0) {
@@ -219,5 +218,4 @@ class APIManager
     {
         return static::$_apisecret;
     }
-
 }

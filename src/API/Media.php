@@ -1,62 +1,64 @@
 <?php
+
 namespace Dulabs\Instagram\API;
 
 use Dulabs\Instagram\Instagram;
 
 /**
  * Media Endpoints
- * https://www.instagram.com/developer/endpoints/media
+ * https://www.instagram.com/developer/endpoints/media.
  */
-
 class Media
 {
+    public function getInstance()
+    {
+        $instance;
+        $instance = ($instance === null) ? new self() : $instance;
 
-	public function getInstance()
-	{
-		$instance;
-		$instance = ($instance === null) ? new self() : $instance;
-		return $instance;
-	}
+        return $instance;
+    }
 
-	/**
-	 * Get information about a media object.
-	 * @param string $media
-	 *
-	 * @return Object
-	 */
+    /**
+     * Get information about a media object.
+     *
+     * @param string $media
+     *
+     * @return object
+     */
+    public function get($media)
+    {
+        $endpoint = "media/{$media}";
 
-	public function get($media)
-	{
-		$endpoint = "media/{$media}";
-		return $this->_call($endpoint);
-	}
+        return $this->_call($endpoint);
+    }
 
-	/**
-	 * A media object's shortcode can be found in its shortlink URL.
-	 * An example shortlink is http://instagram.com/p/tsxp1hhQTG/.
-	 * Its corresponding shortcode is tsxp1hhQTG.
-	 * @param string $shortcode
-	 *
-	 * @return Object
-	 */
+    /**
+     * A media object's shortcode can be found in its shortlink URL.
+     * An example shortlink is http://instagram.com/p/tsxp1hhQTG/.
+     * Its corresponding shortcode is tsxp1hhQTG.
+     *
+     * @param string $shortcode
+     *
+     * @return object
+     */
+    public function shortcode($shortcode)
+    {
+        $endpoint = "media/shortcode/{$shortcode}";
 
-	public function shortcode($shortcode)
-	{
-		$endpoint = "media/shortcode/{$shortcode}";
-		return $this->_call($endpoint);
-	} 
+        return $this->_call($endpoint);
+    }
 
-	/**
-	 * Search for recent media in a given area.
-	 * @param array $params
-	 *
-	 * @return Object
-	 */
+    /**
+     * Search for recent media in a given area.
+     *
+     * @param array $params
+     *
+     * @return object
+     */
+    public function search($params)
+    {
+        $endpoint = 'media/search';
 
-	public function search($params)
-	{
-		$endpoint = "media/search";
-		return $this->_call($endpoint,$params);
-	}
-
+        return $this->_call($endpoint, $params);
+    }
 }

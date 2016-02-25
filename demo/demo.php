@@ -1,16 +1,15 @@
 <?php
 
-if(!isset($_COOKIE["instagram_token"]) && empty($_COOKIE["instagram_token"]))
-{
-	echo "No Access Token Was Found";
-	exit;
+if (!isset($_COOKIE['instagram_token']) && empty($_COOKIE['instagram_token'])) {
+    echo 'No Access Token Was Found';
+    exit;
 }
 
-require_once(__DIR__.'/../vendor/autoload.php');
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Dulabs\Instagram\Instagram;
 
-$token = $_COOKIE["instagram_token"];
+$token = $_COOKIE['instagram_token'];
 $i = new Instagram();
 
 $i->setAccessToken($token);
@@ -20,28 +19,22 @@ $i->setAccessToken($token);
 $response = $i->user()->self();
 print_r($response);
 
-
 /* Search User */
 
  //$response = Instagram::user()->search(['q' => 'jelly']);
  //print_r($response);
 
- 
 //Get Current User Media
 
 // $response = Instagram::user()->self_media();
 
  //print_r($response);
 
-
- 
-
 /* Get The Follows*/
 
  //$response = Instagram::relationship()->follows();
- 
- //print_r($response);
 
+ //print_r($response);
 
  /* 
  
@@ -51,4 +44,3 @@ print_r($response);
  $response = Instagram::like()->users("1052787763161649701_44077099");
  print_r($response);
 */
-
