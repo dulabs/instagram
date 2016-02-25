@@ -1,61 +1,63 @@
 <?php
+
 namespace Dulabs\Instagram\API;
 
 use Dulabs\Instagram\Instagram;
 
 /**
  * Location Endpoints
- * https://www.instagram.com/developer/endpoints/locations
+ * https://www.instagram.com/developer/endpoints/locations.
  */
-
 class Location
 {
+    public function getInstance()
+    {
+        static $instance;
+        $instance = ($instance === null) ? new self() : $instance;
 
-	public function getInstance()
-	{
-		static $instance;
-		$instance = ($instance === null) ? new self() : $instance;
-		return $instance;
-	}
+        return $instance;
+    }
 
-	/**
-	 * Get information about a location.
-	 * @param string $location_id
-	 *
-	 * @return Object
-	 */
+    /**
+     * Get information about a location.
+     *
+     * @param string $location_id
+     *
+     * @return object
+     */
+    public function get($location_id)
+    {
+        $endpoint = "locations/{$location_id}";
 
-	public function get($location_id)
-	{
-		$endpoint = "locations/{$location_id}";
-		return $this->_call($endpoint);
-	}
+        return $this->_call($endpoint);
+    }
 
-	/**
-	 * Get a list of recent media objects from a given location.
-	 * @param string $location_id
-	 * @param array  $params
-	 *
-	 * @return Object
-	 */
+    /**
+     * Get a list of recent media objects from a given location.
+     *
+     * @param string $location_id
+     * @param array  $params
+     *
+     * @return object
+     */
+    public function media($location_id, $params = null)
+    {
+        $endpoint = "locations/{$location_id}/media/recent";
 
-	public function media($location_id,$params=null)
-	{
-		$endpoint = "locations/{$location_id}/media/recent";
-		return $this->_call($endpoint,$params);
-	}
+        return $this->_call($endpoint, $params);
+    }
 
-	/**
-	 * Search for a location by geographic coordinate.
-	 * @param array  $params
-	 *
-	 * @return Object
-	 */
+    /**
+     * Search for a location by geographic coordinate.
+     *
+     * @param array $params
+     *
+     * @return object
+     */
+    public function search($params)
+    {
+        $endpoint = 'locations/search';
 
-	public function search($params)
-	{
-		$endpoint = "locations/search";
-		return $this->_call($endpoint,$params);
-	}
-
+        return $this->_call($endpoint, $params);
+    }
 }
